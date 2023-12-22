@@ -7,6 +7,8 @@ import Home from "../pages/Home/Home";
 import Error from "../components/Error/Error";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import Profile from "../pages/Dashboard/Profile/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -26,4 +28,14 @@ export const router = createBrowserRouter([
           element:<Register></Register>
         }]
     },
+    {
+      path:'dashboard',
+      element:<DashboardHome></DashboardHome>,
+      children:[
+        {
+          path:'profile',
+          element:<Profile></Profile>
+        }
+      ]
+    }
   ]);

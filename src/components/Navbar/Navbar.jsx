@@ -13,6 +13,9 @@ const Navbar = () => {
     <li className="font-sans font-semibold "><NavLink to='/'>Home</NavLink></li>
     <li className="font-sans font-semibold"><NavLink  to="/about">About</NavLink></li>
     <li className="font-sans font-semibold"><NavLink  to="/features">Features</NavLink></li>
+    {
+      user &&  <li className="font-sans font-semibold"><NavLink  to="/dashboard/profile">Dashboard</NavLink></li>
+    }
 
     
    

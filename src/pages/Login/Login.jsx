@@ -3,13 +3,16 @@ import { useForm } from "react-hook-form";
 import './Login.css'
 
 import img1 from '../../assets/profile.png'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import Social from "../../components/Social/Social";
+
 const Login = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const {login}=useContext(AuthContext)
+    const navigate=useNavigate()
     const onSubmit=data=>{
         console.log(data.email, data.password)
         login(data.email,data.password)
@@ -30,6 +33,7 @@ const Login = () => {
             },
             willClose: () => {
                 clearInterval(timerInterval);
+                navigate("/dashboard/profile")
             }
             }).then((result) => {
             /* Read more about handling dismissals below */
@@ -37,6 +41,8 @@ const Login = () => {
                 console.log("I was closed by the timer");
             }
             });
+            
+
 
         })
         .catch(error=>{
@@ -133,7 +139,8 @@ const Login = () => {
                             
                         </form>
                         </div>
-                        <p className='px-6 mb-9 font-Sora font-semibold'><small>Are You New Here? <Link to="/register">Create an account</Link> </small></p>
+                        <p className='px-6 mb-3 font-Sora font-semibold text-center'><small>Are You New Here? <Link to="/register">Create an account</Link> </small></p>
+                        <Social></Social>
 
 
 </div>
