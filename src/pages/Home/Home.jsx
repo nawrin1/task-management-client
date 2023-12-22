@@ -6,9 +6,7 @@ const Home = () => {
         <div>
             
             <Banner></Banner>
-            <div className="h-[600px] bg-slate-600">
-
-            </div>
+            
             
         </div>
     );

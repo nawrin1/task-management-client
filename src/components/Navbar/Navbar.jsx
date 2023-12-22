@@ -1,9 +1,13 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineTaskAlt } from "react-icons/md";
 
 import './Navbar.css'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
+import Swal from "sweetalert2";
 const Navbar = () => {
+  const{user,logout}=useContext(AuthContext)
+  const navigate=useNavigate()
 
     const navOptions = <>
     <li className="font-sans font-semibold "><NavLink to='/'>Home</NavLink></li>
@@ -16,6 +20,24 @@ const Navbar = () => {
    
 </>
  const [isScrolled, setIsScrolled] = useState(false);
+ const handleLogOut=()=>{
+        logout()
+        .then(() => {     
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'logged out successfully',
+            showConfirmButton: false,
+            timer: 1500
+
+          
+        })
+        navigate('/')
+      }
+ 
+  )
+      .catch(error => console.log(error));
+}
 
  useEffect(() => {
      const handleScroll = () => {
@@ -48,7 +70,21 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn btn-md rounded-[40px] bg-green-400 text-xl font-sans font-semibold">Login</a>
+        {
+            user ? <>
+            {/* <span className="mx-4 font-Sora font-semibold">{user?.displayName}</span> */}
+             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+             
+                <div className="w-10 rounded-full">
+                <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+                </div>
+            </label>
+                
+                <button onClick={handleLogOut} className="btn btn-outline">LogOut</button>
+            </> : ""
+                
+            
+        }
         </div>
       </div>
     );
