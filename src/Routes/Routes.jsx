@@ -9,6 +9,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import Profile from "../pages/Dashboard/Profile/Profile";
+import CreateTask from "../pages/Dashboard/CreateTask/CreateTask";
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +36,9 @@ export const router = createBrowserRouter([
         {
           path:'profile',
           element:<Profile></Profile>
+        },{
+          path:'create',
+          element:<CreateTask></CreateTask>
         }
       ]
     }

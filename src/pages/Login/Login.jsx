@@ -98,7 +98,7 @@ const Login = () => {
     //         </div>
     //     </div>
     // </div>
-    <div className="flex items-center justify-center bg-slate-500 backimage ">
+    <div className="back flex items-center justify-center">
         <div className="bg-white p-4 rounded shadow-md  mb-[40px] relative mt-[130px] md:mt-[150px] lg:my-[74px] ">
         <div className="avatar absolute -top-[60px] left-[38%]">
   <div className="w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 ">

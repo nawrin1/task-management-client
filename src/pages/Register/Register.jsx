@@ -4,13 +4,15 @@ import './Register.css'
 import Swal from 'sweetalert2'
 
 import img1 from '../../assets/profile.png'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
+import axios from "axios";
 
 const Register = () => {
     // const {createUser,updateProfile,logout}=useContext(AuthContext)
-    console.log(useContext(AuthContext))
+    
+    const navigate=useNavigate()
     const { createUser, updateProfileUser,logout } = useContext(AuthContext);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -19,17 +21,54 @@ const Register = () => {
         createUser(data.email,data.password)
             .then(result=>{
                 console.log(result.user,"user console")
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Account created successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
+                
+                
                   updateProfileUser(data.name,data.photoURL)
+                  .then(() => {
+                       
+                    const userInfo = {
+                        name: data.name,
+                        email: data.email,
+                        photo:data.photoURL
+                      
+                    }
+                    
+                    axios.post('http://localhost:5000/users', userInfo)
+                        .then(res => {
+                            console.log(res,"after post from register")
+                            if (res.data.insertedId) {
+                                console.log('user added')
+                                reset();
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Account Created successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                logout()
+                                .then(res=>navigate('/login'))
+
+
+                               
+                            }
+                        })
+
+
+                })
+                .catch(error => {
+                    console.log(error)
+                    
+                })
    
             })
             .catch(error=>{
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Registration failed",
+                    
+                  });
                 console.log(error)
             })
 
@@ -37,7 +76,7 @@ const Register = () => {
 
     return (
 
-    <div className="flex items-center justify-center bg-slate-500 backimage ">
+    <div className="reg flex items-center justify-center bg-slate-500 ">
         <div className="bg-white p-4 rounded shadow-md  mb-[40px] relative mt-[130px] md:mt-[150px] lg:my-[74px] ">
         <div className="avatar absolute -top-[45px] left-[40%]">
   <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 ">

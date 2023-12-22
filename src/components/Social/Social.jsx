@@ -3,6 +3,7 @@ import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../provider/AuthProvider";
 
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 
@@ -15,14 +16,18 @@ const Social= () => {
         console.log("google ")
         googleSign()
         .then(result =>{
+            
             console.log(result.user);
             const userInfo = {
                 email: result.user?.email,
                 name: result.user?.displayName,
-                
+                photo:result.user.photoURL
             }
-            console.log(userInfo,"grom google user info")
-            navigate('/dashboard');
+            axios.post('http://localhost:5000/users', userInfo)
+            .then(res =>{
+                console.log(res.data);
+                navigate('/dashboard/profile');
+            })
             
         })
     }
