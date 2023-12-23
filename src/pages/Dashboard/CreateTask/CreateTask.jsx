@@ -5,6 +5,7 @@ import { AuthContext } from "../../../provider/AuthProvider";
 import './CreateTask.css'
 import axios from "axios";
 import Swal from "sweetalert2";
+import img1 from '../../../assets/task.png'
 
 
 const CreateTask = () => {
@@ -12,7 +13,7 @@ const CreateTask = () => {
     const { register, handleSubmit, reset, formState: { errors },setError,control } = useForm();
     const onSubmit=async (data)=>{
         console.log(data)
-        const task={title:data.title, description:data.description,deadline:data.deadline,email:user.email,priority:data.priority}
+        const task={title:data.title, description:data.description,deadline:data.deadline,email:user.email,priority:data.priority,status:"To-do"}
         console.log(task,"from create")
         const taskData = await axios.post('http://localhost:5000/tasks', task)
             console.log(taskData.data)
@@ -106,14 +107,37 @@ const CreateTask = () => {
            <h2 className="font-sans font-semibold text-3xl text-center ">Create a Task</h2>
               
                    
-               <div className=" shadow-2xl">
+               <div className=" shadow-2xl flex">
+                <div className="w-[40%] bg-slate-500 hidden lg:block md:block">
+                    <img src={img1} alt="" />
+
+                </div>
                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                        <div className="form-control  ">
                         <div>
-                        <TextField  InputProps={{
+                        {/* <TextField  InputProps={{
        
         style: { color: 'black' }, // Adjust the color to make it more visible
-      }}style={{fontFamily:'sans'}} fullWidth id="outlined-search1" label="Title" type="text"  {...register("title", { required: true })} name="title" placeholder="Title.."/>
+      }}style={{fontFamily:'sans',borderBottom: "1px solid black"}} disableUnderline: true fullWidth id="outlined-search1" label="Title" type="text"  {...register("title", { required: true })} name="title" placeholder="Title.."/> */}
+                    <TextField
+                fullWidth
+                id="outlined-search1"
+                label="Title"
+                type="text"
+                {...register("title", { required: true })}
+                name="title"
+                placeholder="Title.."
+                InputProps={{
+                    style: {
+                    color: 'black',
+                    borderBottom: "1px solid black",
+                    },
+                    
+                }}
+                style={{ fontFamily: 'sans' }}
+                variant="standard"  
+                />
+
                         </div>
    
                        </div>
@@ -121,8 +145,8 @@ const CreateTask = () => {
                           
                            <TextField  InputProps={{
         
-        style: { color: 'black' }, // Adjust the color to make it more visible
-      }}style={{fontFamily:'sans'}}  id="outlined-search2" label="Description" type="text"  {...register("description", { required: true })} placeholder="Description.." />
+        style: { color: 'black',borderBottom: "1px solid black" }, 
+      }} style={{fontFamily:'sans'}}  id="outlined-search2" label="Description" type="text"  {...register("description", { required: true })} variant="standard"  placeholder="Description.." />
                            
                        
                            
@@ -133,12 +157,12 @@ const CreateTask = () => {
                   
 
                            <label className="label ">
-                               <span className="label-text mt-2 font-sans font-semibold text-2xl">Deadline:</span>
+                               <span className="label-text mt-2 font-sans text-slate-600 text-[18px]">Deadline:</span>
                            </label>
                            <TextField  InputProps={{
        
-        style: { color: 'black' }, 
-      }}style={{fontFamily:'sans'}} id="outlined-search8"   type="date"  {...register("deadline", {
+        style: { color: 'black',borderBottom: "1px solid black" }, 
+      }}style={{fontFamily:'sans'}} id="outlined-search8" variant="standard"  type="date"  {...register("deadline", {
                                required: true,
                               
                                
@@ -156,7 +180,7 @@ const CreateTask = () => {
     </select>
          */}
          <label className="label ">
-                               <span className="label-text mt-2 font-sans font-semibold text-2xl">Priority:</span>
+                               <span className="label-text mt-2 font-sans text-slate-600 text-[18px]">Priority:</span>
                            </label>
                            <Controller
                     name="priority"
@@ -176,7 +200,7 @@ const CreateTask = () => {
     
                        </div>
                        <div className="form-control mt-2">
-                                <input className="btn btn-primary font-Sora font-semibold" type="submit" value="Create Task" />
+                                <input className="btn  bg-[#4a9bb4] font-Sora font-semibold" type="submit" value="Create Task" />
                             </div>
                           
                        

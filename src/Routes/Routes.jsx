@@ -10,6 +10,8 @@ import Register from "../pages/Register/Register";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import CreateTask from "../pages/Dashboard/CreateTask/CreateTask";
+import Task from "../pages/Dashboard/Task/Task";
+import AllTask from "../pages/AllTask/AllTask";
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +41,9 @@ export const router = createBrowserRouter([
         },{
           path:'create',
           element:<CreateTask></CreateTask>
+        },{
+          path:'task',
+          element:<AllTask></AllTask>
         }
       ]
     }
