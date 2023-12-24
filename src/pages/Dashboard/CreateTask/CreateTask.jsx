@@ -16,7 +16,7 @@ const CreateTask = () => {
         console.log(data)
         const task={title:data.title, description:data.description,deadline:data.deadline,email:user.email,priority:data.priority,status:"To-do"}
         console.log(task,"from create")
-        const taskData = await axios.post('http://localhost:5000/tasks', task)
+        const taskData = await axios.post('https://task-management-server-red-delta.vercel.app/tasks', task)
             console.log(taskData.data)
             if(taskData.data.insertedId){
                 

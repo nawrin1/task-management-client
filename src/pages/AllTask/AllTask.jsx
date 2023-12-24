@@ -18,7 +18,7 @@ const AllTask = () => {
   const { data: task = [], isPending: loading, isFetched,refetch } = useQuery({
     queryKey: ['everytasks'],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/tasks?email=${user.email}`);
+      const res = await axios.get(`https://task-management-server-red-delta.vercel.app/tasks?email=${user.email}`);
       console.log(res.data, "ki");
       return res.data;
     }
@@ -102,7 +102,7 @@ const handleDel=(id,refetch)=>{
       }).then(async(result) => {
         if (result.isConfirmed) {
 
-            const res= await axios.delete(`http://localhost:5000/tasks/${id}`)
+            const res= await axios.delete(`https://task-management-server-red-delta.vercel.app/tasks/${id}`)
            
                     if (res.data.deletedCount > 0) {
                         console.log('before refetch1')

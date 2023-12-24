@@ -33,7 +33,7 @@ const Register = () => {
                       
                     }
                     
-                    axios.post('http://localhost:5000/users', userInfo)
+                    axios.post('https://task-management-server-red-delta.vercel.app/users', userInfo)
                         .then(res => {
                             console.log(res,"after post from register")
                             if (res.data.insertedId) {

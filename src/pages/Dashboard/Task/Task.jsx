@@ -11,7 +11,7 @@ const Task = () => {
     const {data: task = [], isPending: loadings,isFetched } = useQuery({
         queryKey: ['alltask'], 
         queryFn: async() =>{
-            const res = await axios.get(`http://localhost:5000/tasks`);
+            const res = await axios.get(`https://task-management-server-red-delta.vercel.app/tasks`);
             console.log(res.data,"ki")
             return res.data;
         }

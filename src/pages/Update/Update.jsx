@@ -22,7 +22,7 @@ const Update= () => {
         console.log(data)
         const task={title:data.title, description:data.description,deadline:data.deadline,email:user.email,priority:data.priority,status:"To-do"}
         console.log(task,"from update")
-        const taskData = await axios.patch(`http://localhost:5000/tasks/${datas._id}`, task)
+        const taskData = await axios.patch(`https://task-management-server-red-delta.vercel.app/tasks/${datas._id}`, task)
             console.log(taskData.data)
             if(taskData.data.modifiedCount>0){
                 toast.success("Task is Updated")
