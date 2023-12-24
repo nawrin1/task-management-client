@@ -1,19 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Watch } from "react-loader-spinner";
 import Swal from "sweetalert2";
+import { RxUpdate } from "react-icons/rx";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
+import toast from "react-hot-toast";
 
 const AllTask = () => {
   const [toDo, setToDo] = useState([]);
   const [ongoing, setOngoing] = useState([]);
   const [completed, setCompleted] = useState([]);
+  const {user}=useContext(AuthContext)
   const arr = [ "To-do","Ongoing", "Completed"];
 
   const { data: task = [], isPending: loading, isFetched,refetch } = useQuery({
     queryKey: ['everytasks'],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/tasks`);
+      const res = await axios.get(`http://localhost:5000/tasks?email=${user.email}`);
       console.log(res.data, "ki");
       return res.data;
     }
@@ -101,14 +106,8 @@ const handleDel=(id,refetch)=>{
            
                     if (res.data.deletedCount > 0) {
                         console.log('before refetch1')
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Deleted successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                            
-                        })
+                        toast.success("Deleted")
+
                         console.log('before refetch')
                         refetch()
                         console.log('after refetch')
@@ -122,7 +121,8 @@ const handleDel=(id,refetch)=>{
 
 const List = ({ tas ,refetch}) => {
   return (
-    <div className="flex justify-between bg-slate-500 w-[300px]  p-4 my-2 rounded-md text-white">
+    <div className="flex justify-between bg-slate-500 w-[300px]  p-4 my-2 rounded-md text-white ">
+        <Link to={`/dashboard/update/${tas._id}`}><div className="text-2xl text-black" ><RxUpdate></RxUpdate></div></Link>
     <div className="">
       {tas.title}
     </div>

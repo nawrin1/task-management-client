@@ -1,4 +1,5 @@
 import Banner from "../../components/Banner/Banner";
+import Section from "../../components/Section/Section";
 
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
         <div>
             
             <Banner></Banner>
+            <Section></Section>
             
             
         </div>

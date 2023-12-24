@@ -1,34 +1,34 @@
+import { useLoaderData } from "react-router-dom";
+
+
 import { MenuItem, Select, TextField } from "@mui/material";
 import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AuthContext } from "../../../provider/AuthProvider";
-import './CreateTask.css'
+
+
 import axios from "axios";
 import Swal from "sweetalert2";
-import img1 from '../../../assets/task.png'
+import img1 from '../../assets/update2.png'
+import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 
 
-const CreateTask = () => {
+const Update= () => {
     const {user}=useContext(AuthContext)
+    const datas=useLoaderData()
+    console.log(datas,"from update")
     const { register, handleSubmit, reset, formState: { errors },setError,control } = useForm();
     const onSubmit=async (data)=>{
         console.log(data)
         const task={title:data.title, description:data.description,deadline:data.deadline,email:user.email,priority:data.priority,status:"To-do"}
-        console.log(task,"from create")
-        const taskData = await axios.post('http://localhost:5000/tasks', task)
+        console.log(task,"from update")
+        const taskData = await axios.patch(`http://localhost:5000/tasks/${datas._id}`, task)
             console.log(taskData.data)
-            if(taskData.data.insertedId){
+            if(taskData.data.modifiedCount>0){
+                toast.success("Task is Updated")
                 
-                reset();
-                // Swal.fire({
-                //     position: "top-end",
-                //     icon: "success",
-                //     title: `Task is created`,
-                //     showConfirmButton: false,
-                //     timer: 1500
-                //   });
-                toast.success("Task is created")
+                // reset();
+
             }
 
 
@@ -39,10 +39,10 @@ const CreateTask = () => {
 <div className="">
         <div className="min-h-screen max-w-3xl mx-auto pt-2 ">
            <div className="">
-           <h2 className="font-sans font-semibold text-3xl text-center ">Create a Task</h2>
+           <h2 className="font-sans font-semibold text-3xl text-center ">Update Task</h2>
               
                    
-               <div className=" shadow-2xl flex flex-row-reverse">
+               <div className=" shadow-2xl flex">
                 <div className="w-[40%] bg-slate-500 hidden lg:block md:block">
                     <img src={img1} alt="" />
 
@@ -50,10 +50,7 @@ const CreateTask = () => {
                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                        <div className="form-control  ">
                         <div>
-                        {/* <TextField  InputProps={{
-       
-        style: { color: 'black' }, // Adjust the color to make it more visible
-      }}style={{fontFamily:'sans',borderBottom: "1px solid black"}} disableUnderline: true fullWidth id="outlined-search1" label="Title" type="text"  {...register("title", { required: true })} name="title" placeholder="Title.."/> */}
+                        
                     <TextField
                 fullWidth
                 id="outlined-search1"
@@ -70,6 +67,7 @@ const CreateTask = () => {
                     
                 }}
                 style={{ fontFamily: 'sans' }}
+                defaultValue={datas.title}
                 variant="standard"  
                 />
 
@@ -81,7 +79,7 @@ const CreateTask = () => {
                            <TextField  InputProps={{
         
         style: { color: 'black',borderBottom: "1px solid black" }, 
-      }} style={{fontFamily:'sans'}}  id="outlined-search2" label="Description" type="text"  {...register("description", { required: true })} variant="standard"  placeholder="Description.." />
+      }} style={{fontFamily:'sans'}} defaultValue={datas.description} id="outlined-search2" label="Description" type="text"  {...register("description", { required: true })} variant="standard"  placeholder="Description.." />
                            
                        
                            
@@ -97,7 +95,7 @@ const CreateTask = () => {
                            <TextField  InputProps={{
        
         style: { color: 'black',borderBottom: "1px solid black" }, 
-      }}style={{fontFamily:'sans'}} id="outlined-search8" variant="standard"  type="date"  {...register("deadline", {
+      }}style={{fontFamily:'sans'}} id="outlined-search8" defaultValue={datas.deadline} variant="standard"  type="date"  {...register("deadline", {
                                required: true,
                               
                                
@@ -120,7 +118,7 @@ const CreateTask = () => {
                            <Controller
                     name="priority"
                     control={control}
-                    defaultValue="moderate"
+                    defaultValue={datas.priority}
                     render={({ field }) => (
                       <Select {...field} label="Priority">
                         
@@ -135,7 +133,7 @@ const CreateTask = () => {
     
                        </div>
                        <div className="form-control mt-2">
-                                <input className="btn  bg-[#4a9bb4] font-Sora font-semibold" type="submit" value="Create Task" />
+                                <input className="btn  bg-[#4a9bb4] font-Sora font-semibold" type="submit" value="Update Task" />
                             </div>
                           
                        
@@ -152,4 +150,4 @@ const CreateTask = () => {
     );
 };
 
-export default CreateTask;
+export default Update;

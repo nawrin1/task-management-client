@@ -12,6 +12,8 @@ import Profile from "../pages/Dashboard/Profile/Profile";
 import CreateTask from "../pages/Dashboard/CreateTask/CreateTask";
 import Task from "../pages/Dashboard/Task/Task";
 import AllTask from "../pages/AllTask/AllTask";
+import Update from "../pages/Update/Update";
+import About from "../pages/About/About";
 
 export const router = createBrowserRouter([
     {
@@ -29,6 +31,9 @@ export const router = createBrowserRouter([
         },{
           path:'/register',
           element:<Register></Register>
+        },{
+          path:'/about',
+          element:<About></About>
         }]
     },
     {
@@ -44,6 +49,10 @@ export const router = createBrowserRouter([
         },{
           path:'task',
           element:<AllTask></AllTask>
+        },{
+          path:"update/:id",
+          element:<Update></Update>,
+          loader:({params})=>fetch(`http://localhost:5000/tasks/${params.id}`)
         }
       ]
     }
